@@ -1,27 +1,5 @@
-# Aplicación Dashboard Cuentas por Cobrar - Locatel
-# Archivo requirements.txt para despliegue en Streamlit Cloud
-
-# Framework principal
-streamlit==1.28.1
-
-# Manipulación de datos
-pandas==2.1.1
-numpy==1.24.3
-
-# Visualización
-plotly==5.17.0
-
-# Generación de reportes PDF
-reportlab==4.0.4
-
-# Manipulación de archivos Excel
-openpyxl==3.1.2
-
-# Utilidades adicionales
-datetime
-io
-re
-base64
-
-# Opcional: Para mejor rendimiento
-pyarrow==13.0.0
+streamlit
+pandas
+plotly
+reportlab
+openpyxl
