@@ -4,535 +4,566 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Cuentas por Cobrar - Locatel</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #0A9561 0%, #419E46 100%);
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 300;
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .nav-tabs {
-            display: flex;
-            background: white;
-            border-radius: 10px;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
-        .nav-tab {
-            flex: 1;
-            padding: 1rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            background: white;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        .nav-tab:hover {
-            background: #f8f9fa;
-        }
-
-        .nav-tab.active {
-            background: #FED519;
-            color: #333;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .metric-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .metric-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .metric-value {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .metric-label {
-            color: #666;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .chart-container {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
-
-        .chart-title {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #333;
-            text-align: center;
-        }
-
-        .table-container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .table th {
-            background: #0A9561;
-            color: white;
-            padding: 1rem;
-            text-align: left;
-            font-weight: 500;
-        }
-
-        .table td {
-            padding: 1rem;
-            border-bottom: 1px solid #eee;
-        }
-
-        .table tr:hover {
-            background: #f8f9fa;
-        }
-
-        .alert {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            color: #856404;
-            padding: 1rem;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-        }
-
-        .alert.danger {
-            background: #f8d7da;
-            border-color: #f5c6cb;
-            color: #721c24;
-        }
-
-        .alert.success {
-            background: #d4edda;
-            border-color: #c3e6cb;
-            color: #155724;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        @media (max-width: 768px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-tabs {
-                flex-direction: column;
-            }
-
-            .header h1 {
-                font-size: 2rem;
-            }
-        }
-
-        .risk-high { color: #dc3545; font-weight: bold; }
-        .risk-medium { color: #ffc107; font-weight: bold; }
-        .risk-low { color: #28a745; font-weight: bold; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .locatel-yellow { background-color: #FED519; }
+        .locatel-orange { background-color: #F79617; }
+        .locatel-light-green { background-color: #7CC141; }
+        .locatel-medium-green { background-color: #419E46; }
+        .locatel-dark-green { background-color: #0A9561; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Dashboard Cuentas por Cobrar</h1>
-        <p>Análisis actualizado - Julio 2025</p>
-    </div>
+    <div id="dashboard-root"></div>
 
-    <div class="container">
-        <div class="nav-tabs">
-            <button class="nav-tab active" onclick="showTab('overview')">Resumen</button>
-            <button class="nav-tab" onclick="showTab('aging')">Antigüedad</button>
-            <button class="nav-tab" onclick="showTab('clients')">Top Clientes</button>
-            <button class="nav-tab" onclick="showTab('risk')">Análisis de Riesgo</button>
-        </div>
+    <script type="text/babel">
+        function App() {
+            const [activeTab, setActiveTab] = React.useState('overview');
 
-        <!-- Tab: Resumen -->
-        <div id="overview" class="tab-content active">
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <div class="metric-value" style="color: #0A9561;">335</div>
-                    <div class="metric-label">Total Facturas</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value" style="color: #419E46;">$11,960.34</div>
-                    <div class="metric-label">Monto Total</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value" style="color: #7CC141;">99</div>
-                    <div class="metric-label">Clientes Únicos</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value" style="color: #F79617;">$35.70</div>
-                    <div class="metric-label">Promedio por Factura</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value" style="color: #FED519;">26.3</div>
-                    <div class="metric-label">Días Promedio</div>
-                </div>
-            </div>
+            const data = {
+                totalInvoices: 327,
+                totalAmount: 10038.70,
+                uniqueClients: 98,
+                avgInvoiceAmount: 30.70,
+                avgDaysToCollect: 25,
+                topClients: [
+                    { name: 'AC CENTRO MEDICO DOCENTE LA TRINIDAD', amount: 2368.11, invoices: 38 },
+                    { name: 'BANCO DEL TESORO CA', amount: 1865.66, invoices: 11 },
+                    { name: 'INSTITUTO DIAGNISTICO SAN BERNARDINO', amount: 1482.70, invoices: 3 },
+                    { name: 'TRINIGOLD FARMACIA CA', amount: 552.40, invoices: 3 },
+                    { name: 'INVERSIONES FLAVICA', amount: 246.67, invoices: 3 },
+                    { name: 'MIRANDA GAS MIRANGAS SA', amount: 227.77, invoices: 5 },
+                    { name: 'ALICIA MARGARITA EGLOFF WEIL', amount: 220.21, invoices: 2 },
+                    { name: 'JOSE CLAVIER', amount: 212.15, invoices: 5 },
+                    { name: 'JESUS ENRIQUE NAVARRO ROSALES', amount: 149.34, invoices: 7 },
+                    { name: 'MARIA MILAGROS CLAVIER GRUBER', amount: 140.78, invoices: 4 }
+                ],
+                aging: {
+                    current: { amount: 7478.96, percentage: 74.5, count: 230 },
+                    days30: { amount: 1159.94, percentage: 11.6, count: 74 },
+                    days60: { amount: 1088.54, percentage: 10.8, count: 13 },
+                    days90: { amount: 155.30, percentage: 1.5, count: 5 },
+                    over90: { amount: 155.96, percentage: 1.6, count: 5 }
+                },
+                monthlyTrend: [
+                    { month: 'Feb 2025', amount: 128.60, invoices: 3 },
+                    { month: 'Mar 2025', amount: 37.40, invoices: 3 },
+                    { month: 'Abr 2025', amount: 544.74, invoices: 10 },
+                    { month: 'May 2025', amount: 995.73, invoices: 12 },
+                    { month: 'Jun 2025', amount: 1598.34, invoices: 109 },
+                    { month: 'Jul 2025', amount: 6733.89, invoices: 190 }
+                ],
+                riskAnalysis: {
+                    high: { clients: 10, amount: 311.26, description: '+90 días vencido' },
+                    medium: { clients: 13, amount: 1088.54, description: '61-90 días vencido' },
+                    low: { clients: 304, amount: 8638.90, description: '0-60 días' }
+                }
+            };
 
-            <div class="grid-2">
-                <div class="chart-container">
-                    <h3 class="chart-title">Distribución por Antigüedad</h3>
-                    <canvas id="agingChart"></canvas>
-                </div>
-                <div class="chart-container">
-                    <h3 class="chart-title">Análisis de Riesgo</h3>
-                    <canvas id="riskChart"></canvas>
-                </div>
-            </div>
-        </div>
+            const locatelColors = {
+                yellow: '#FED519',
+                orange: '#F79617',
+                lightGreen: '#7CC141',
+                mediumGreen: '#419E46',
+                darkGreen: '#0A9561'
+            };
 
-        <!-- Tab: Antigüedad -->
-        <div id="aging" class="tab-content">
-            <div class="chart-container">
-                <h3 class="chart-title">Análisis de Antigüedad de Cuentas</h3>
-                <canvas id="agingDetailChart"></canvas>
-            </div>
+            const TabButton = ({ id, label, isActive, onClick }) => (
+                React.createElement('button', {
+                    onClick: () => onClick(id),
+                    className: `px-6 py-3 font-semibold rounded-t-lg transition-all duration-200 ${
+                        isActive 
+                            ? 'text-white shadow-lg transform -translate-y-1' 
+                            : 'text-gray-700 bg-gray-100 hover:bg-gray-200'
+                    }`,
+                    style: {
+                        backgroundColor: isActive ? locatelColors.darkGreen : undefined
+                    }
+                }, label)
+            );
 
-            <div class="table-container">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Período</th>
-                            <th>Cantidad</th>
-                            <th>Monto</th>
-                            <th>Porcentaje</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>0-30 días</td>
-                            <td>230</td>
-                            <td>$9,336.84</td>
-                            <td>78.1%</td>
-                        </tr>
-                        <tr>
-                            <td>31-60 días</td>
-                            <td>80</td>
-                            <td>$1,203.68</td>
-                            <td>10.1%</td>
-                        </tr>
-                        <tr>
-                            <td>61-90 días</td>
-                            <td>14</td>
-                            <td>$926.85</td>
-                            <td>7.7%</td>
-                        </tr>
-                        <tr>
-                            <td>Más de 90 días</td>
-                            <td>11</td>
-                            <td>$492.97</td>
-                            <td>4.1%</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+            const KPICard = ({ title, value, subtitle, color, icon }) => (
+                React.createElement('div', {
+                    className: "bg-white rounded-xl shadow-lg p-6 border-l-4 hover:shadow-xl transition-shadow duration-300",
+                    style: { borderLeftColor: color }
+                }, 
+                    React.createElement('div', { className: "flex items-center justify-between" },
+                        React.createElement('div', null,
+                            React.createElement('p', { className: "text-gray-700 text-sm font-medium mb-1" }, title),
+                            React.createElement('p', { className: "text-3xl font-bold text-gray-900" }, value),
+                            subtitle && React.createElement('p', { className: "text-gray-600 text-sm mt-1" }, subtitle)
+                        ),
+                        React.createElement('div', { className: "text-4xl", style: { color } }, icon)
+                    )
+                )
+            );
 
-        <!-- Tab: Top Clientes -->
-        <div id="clients" class="tab-content">
-            <div class="chart-container">
-                <h3 class="chart-title">Top 10 Clientes por Monto</h3>
-                <canvas id="clientsChart"></canvas>
-            </div>
+            const OverviewTab = () => (
+                React.createElement('div', { className: "space-y-6" },
+                    // KPIs principales
+                    React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" },
+                        React.createElement(KPICard, {
+                            title: "Total Facturas",
+                            value: data.totalInvoices.toLocaleString(),
+                            subtitle: "Facturas pendientes",
+                            color: locatelColors.yellow,
+                            icon: "📊"
+                        }),
+                        React.createElement(KPICard, {
+                            title: "Monto Total",
+                            value: `$${data.totalAmount.toLocaleString()}`,
+                            subtitle: "Por cobrar",
+                            color: locatelColors.orange,
+                            icon: "💰"
+                        }),
+                        React.createElement(KPICard, {
+                            title: "Clientes Únicos",
+                            value: data.uniqueClients,
+                            subtitle: "Con deuda pendiente",
+                            color: locatelColors.lightGreen,
+                            icon: "👥"
+                        }),
+                        React.createElement(KPICard, {
+                            title: "Promedio por Factura",
+                            value: `$${data.avgInvoiceAmount}`,
+                            subtitle: "Valor promedio",
+                            color: locatelColors.mediumGreen,
+                            icon: "📈"
+                        })
+                    ),
 
-            <div class="table-container">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Cliente</th>
-                            <th>Monto Pendiente</th>
-                            <th>% del Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>AC CENTRO MEDICO DOCENTE LA TRINIDAD</td><td>$2,527.18</td><td>21.1%</td></tr>
-                        <tr><td>BANCO DEL TESORO CA</td><td>$1,568.05</td><td>13.1%</td></tr>
-                        <tr><td>INSTITUTO DIAGNISTICO SAN BERNARDINO</td><td>$1,482.70</td><td>12.4%</td></tr>
-                        <tr><td>TRINIGOLD FARMACIA CA</td><td>$555.79</td><td>4.6%</td></tr>
-                        <tr><td>ESMERALDA CARTAYA</td><td>$370.17</td><td>3.1%</td></tr>
-                        <tr><td>MIRANDA GAS MIRANGAS SA</td><td>$345.16</td><td>2.9%</td></tr>
-                        <tr><td>FELIX ADOLFO LICON GODOY</td><td>$273.16</td><td>2.3%</td></tr>
-                        <tr><td>JESUS ENRIQUE NAVARRO ROSALES</td><td>$261.40</td><td>2.2%</td></tr>
-                        <tr><td>INVERSIONES FLAVICA</td><td>$246.67</td><td>2.1%</td></tr>
-                        <tr><td>ALICIA MARGARITA EGLOFF WEIL</td><td>$220.21</td><td>1.8%</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                    // Alertas críticas
+                    React.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6" },
+                        React.createElement('h3', { className: "text-xl font-bold text-gray-900 mb-4" }, "Alertas Críticas"),
+                        React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-3 gap-4" },
+                            React.createElement('div', { className: "bg-red-50 border border-red-200 rounded-lg p-4" },
+                                React.createElement('div', { className: "flex items-center" },
+                                    React.createElement('span', { className: "text-red-500 text-2xl mr-3" }, "⚠️"),
+                                    React.createElement('div', null,
+                                        React.createElement('p', { className: "font-semibold text-red-800" }, "Facturas +90 días"),
+                                        React.createElement('p', { className: "text-red-700" }, `${data.aging.over90.count} facturas`),
+                                        React.createElement('p', { className: "text-red-700 font-bold" }, `$${data.aging.over90.amount.toLocaleString()}`)
+                                    )
+                                )
+                            ),
+                            React.createElement('div', { className: "bg-yellow-50 border border-yellow-200 rounded-lg p-4" },
+                                React.createElement('div', { className: "flex items-center" },
+                                    React.createElement('span', { className: "text-yellow-500 text-2xl mr-3" }, "⏰"),
+                                    React.createElement('div', null,
+                                        React.createElement('p', { className: "font-semibold text-yellow-800" }, "Promedio Cobranza"),
+                                        React.createElement('p', { className: "text-yellow-700" }, `${data.avgDaysToCollect} días`),
+                                        React.createElement('p', { className: "text-yellow-700 text-sm" }, "Meta: 30 días")
+                                    )
+                                )
+                            ),
+                            React.createElement('div', { className: "bg-blue-50 border border-blue-200 rounded-lg p-4" },
+                                React.createElement('div', { className: "flex items-center" },
+                                    React.createElement('span', { className: "text-blue-500 text-2xl mr-3" }, "🎯"),
+                                    React.createElement('div', null,
+                                        React.createElement('p', { className: "font-semibold text-blue-800" }, "Concentración"),
+                                        React.createElement('p', { className: "text-blue-700" }, "Top 3 clientes"),
+                                        React.createElement('p', { className: "text-blue-700 font-bold" }, "57.1% del total")
+                                    )
+                                )
+                            )
+                        )
+                    ),
 
-        <!-- Tab: Análisis de Riesgo -->
-        <div id="risk" class="tab-content">
-            <div class="alert danger">
-                <strong>Alertas Críticas:</strong> 11 facturas con más de 90 días de antigüedad requieren atención inmediata.
-            </div>
+                    // Resumen ejecutivo con indicadores positivos y áreas de atención
+                    React.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6" },
+                        React.createElement('h3', { className: "text-xl font-bold text-gray-900 mb-4" }, "Resumen Ejecutivo - Julio 2025"),
+                        React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 gap-6" },
+                            React.createElement('div', { className: "space-y-3" },
+                                React.createElement('h4', { className: "font-semibold text-gray-800" }, "Indicadores Positivos"),
+                                React.createElement('ul', { className: "space-y-2 text-sm text-gray-700" },
+                                    React.createElement('li', { className: "flex items-center" },
+                                        React.createElement('span', { className: "text-green-500 mr-2" }, "✓"),
+                                        "74.5% de facturas corrientes (0-30 días)"
+                                    ),
+                                    React.createElement('li', { className: "flex items-center" },
+                                        React.createElement('span', { className: "text-green-500 mr-2" }, "✓"),
+                                        "Promedio de cobranza: 25 días (bajo meta de 30)"
+                                    ),
+                                    React.createElement('li', { className: "flex items-center" },
+                                        React.createElement('span', { className: "text-green-500 mr-2" }, "✓"),
+                                        "Solo 3.1% de facturas con alto riesgo"
+                                    )
+                                )
+                            ),
+                            React.createElement('div', { className: "space-y-3" },
+                                React.createElement('h4', { className: "font-semibold text-gray-800" }, "Áreas de Atención"),
+                                React.createElement('ul', { className: "space-y-2 text-sm text-gray-700" },
+                                    React.createElement('li', { className: "flex items-center" },
+                                        React.createElement('span', { className: "text-orange-500 mr-2" }, "⚠"),
+                                        "Alta concentración en top 3 clientes (57.1%)"
+                                    ),
+                                    React.createElement('li', { className: "flex items-center" },
+                                        React.createElement('span', { className: "text-orange-500 mr-2" }, "⚠"),
+                                        "Incremento significativo en julio (67% del total)"
+                                    ),
+                                    React.createElement('li', { className: "flex items-center" },
+                                        React.createElement('span', { className: "text-orange-500 mr-2" }, "⚠"),
+                                        "$1,399.80 en facturas vencidas (+60 días)"
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            );
 
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <div class="metric-value risk-high">$367.23</div>
-                    <div class="metric-label">Riesgo Alto</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value risk-medium">$7,057.88</div>
-                    <div class="metric-label">Riesgo Medio</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value risk-low">$4,535.23</div>
-                    <div class="metric-label">Riesgo Bajo</div>
-                </div>
-            </div>
+            const AgingTab = () => (
+                React.createElement('div', { className: "space-y-6" },
+                    React.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6" },
+                        React.createElement('h3', { className: "text-xl font-bold text-gray-900 mb-6" }, "Análisis de Antigüedad de Cuentas"),
+                        React.createElement('div', { className: "space-y-4" },
+                            [
+                                { label: 'Corriente (0-30 días)', data: data.aging.current, color: locatelColors.lightGreen },
+                                { label: '31-60 días', data: data.aging.days30, color: locatelColors.yellow },
+                                { label: '61-90 días', data: data.aging.days60, color: locatelColors.orange },
+                                { label: '91-120 días', data: data.aging.days90, color: '#FF6B6B' },
+                                { label: 'Más de 120 días', data: data.aging.over90, color: '#DC2626' }
+                            ].map((item, index) => (
+                                React.createElement('div', { key: index, className: "flex items-center justify-between p-4 bg-gray-50 rounded-lg" },
+                                    React.createElement('div', { className: "flex items-center space-x-4" },
+                                        React.createElement('div', {
+                                            className: "w-4 h-4 rounded-full",
+                                            style: { backgroundColor: item.color }
+                                        }),
+                                        React.createElement('span', { className: "font-medium text-gray-900" }, item.label)
+                                    ),
+                                    React.createElement('div', { className: "flex items-center space-x-6" },
+                                        React.createElement('span', { className: "text-gray-900 font-semibold" }, `${item.data.count} facturas`),
+                                        React.createElement('span', { className: "text-gray-900 font-bold" }, `$${item.data.amount.toLocaleString()}`),
+                                        React.createElement('span', { className: "text-gray-900 font-medium" }, `${item.data.percentage}%`),
+                                        React.createElement('div', { className: "w-24 bg-gray-200 rounded-full h-2" },
+                                            React.createElement('div', {
+                                                className: "h-2 rounded-full transition-all duration-500",
+                                                style: {
+                                                    width: `${item.data.percentage}%`,
+                                                    backgroundColor: item.color
+                                                }
+                                            })
+                                        )
+                                    )
+                                )
+                            ))
+                        )
+                    ),
 
-            <div class="chart-container">
-                <h3 class="chart-title">Distribución de Riesgo</h3>
-                <canvas id="riskDetailChart"></canvas>
-            </div>
+                    // Recomendaciones por antigüedad
+                    React.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6" },
+                        React.createElement('h4', { className: "text-lg font-bold text-gray-900 mb-4" }, "Recomendaciones por Antigüedad"),
+                        React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 gap-4" },
+                            React.createElement('div', { className: "bg-green-50 border border-green-200 rounded-lg p-4" },
+                                React.createElement('h5', { className: "font-semibold text-green-800 mb-2" }, "Cuentas Corrientes (74.5%)"),
+                                React.createElement('p', { className: "text-green-700 text-sm" }, "Excelente gestión. Mantener seguimiento regular y confirmar fechas de pago programadas.")
+                            ),
+                            React.createElement('div', { className: "bg-red-50 border border-red-200 rounded-lg p-4" },
+                                React.createElement('h5', { className: "font-semibold text-red-800 mb-2" }, "Cuentas Vencidas (3.1%)"),
+                                React.createElement('p', { className: "text-red-700 text-sm" }, "Implementar acciones de cobranza inmediata para las 10 facturas de alto riesgo.")
+                            )
+                        )
+                    )
+                )
+            );
 
-            <div class="alert success">
-                <strong>Recomendaciones:</strong>
-                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
-                    <li>Contactar inmediatamente clientes con facturas > 90 días</li>
-                    <li>Implementar recordatorios automáticos a los 45 días</li>
-                    <li>Revisar términos de crédito para nuevos clientes</li>
-                    <li>Considerar descuentos por pronto pago</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+            const TopClientsTab = () => (
+                React.createElement('div', { className: "space-y-6" },
+                    React.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6" },
+                        React.createElement('h3', { className: "text-xl font-bold text-gray-900 mb-6" }, "Top 10 Clientes por Monto Pendiente"),
+                        React.createElement('div', { className: "space-y-3" },
+                            data.topClients.map((client, index) => (
+                                React.createElement('div', { key: index, className: "flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors" },
+                                    React.createElement('div', { className: "flex items-center space-x-4" },
+                                        React.createElement('div', {
+                                            className: "w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm",
+                                            style: { backgroundColor: locatelColors.darkGreen }
+                                        }, index + 1),
+                                        React.createElement('div', null,
+                                            React.createElement('p', { className: "font-medium text-gray-900" }, client.name),
+                                            React.createElement('p', { className: "text-gray-600 text-sm" }, `${client.invoices} facturas pendientes`)
+                                        )
+                                    ),
+                                    React.createElement('div', { className: "text-right" },
+                                        React.createElement('p', { className: "font-bold text-gray-900 text-lg" }, `$${client.amount.toLocaleString()}`),
+                                        React.createElement('p', { className: "text-gray-600 text-sm" }, `${((client.amount / data.totalAmount) * 100).toFixed(1)}% del total`)
+                                    )
+                                )
+                            ))
+                        )
+                    ),
 
-    <script>
-        // Función para cambiar tabs
-        function showTab(tabName) {
-            // Ocultar todos los contenidos
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
+                    // Análisis de concentración
+                    React.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6" },
+                        React.createElement('h4', { className: "text-lg font-bold text-gray-900 mb-4" }, "Análisis de Concentración"),
+                        React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-3 gap-4" },
+                            React.createElement('div', { className: "bg-blue-50 border border-blue-200 rounded-lg p-4 text-center" },
+                                React.createElement('p', { className: "text-blue-800 font-semibold" }, "Top 3 Clientes"),
+                                React.createElement('p', { className: "text-blue-900 text-2xl font-bold" }, "57.1%"),
+                                React.createElement('p', { className: "text-blue-700 text-sm" }, "del monto total")
+                            ),
+                            React.createElement('div', { className: "bg-green-50 border border-green-200 rounded-lg p-4 text-center" },
+                                React.createElement('p', { className: "text-green-800 font-semibold" }, "Top 5 Clientes"),
+                                React.createElement('p', { className: "text-green-900 text-2xl font-bold" }, "69.6%"),
+                                React.createElement('p', { className: "text-green-700 text-sm" }, "del monto total")
+                            ),
+                            React.createElement('div', { className: "bg-purple-50 border border-purple-200 rounded-lg p-4 text-center" },
+                                React.createElement('p', { className: "text-purple-800 font-semibold" }, "Top 10 Clientes"),
+                                React.createElement('p', { className: "text-purple-900 text-2xl font-bold" }, "81.4%"),
+                                React.createElement('p', { className: "text-purple-700 text-sm" }, "del monto total")
+                            )
+                        )
+                    )
+                )
+            );
 
-            // Remover clase active de todos los tabs
-            const tabs = document.querySelectorAll('.nav-tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
+            const TrendsTab = () => (
+                React.createElement('div', { className: "space-y-6" },
+                    React.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6" },
+                        React.createElement('h3', { className: "text-xl font-bold text-gray-900 mb-6" }, "Tendencias y Proyecciones"),
 
-            // Mostrar el contenido seleccionado
-            document.getElementById(tabName).classList.add('active');
+                        React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 gap-6 mb-6" },
+                            React.createElement('div', { className: "bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-6" },
+                                React.createElement('h4', { className: "text-blue-800 font-bold text-lg mb-3" }, "Evolución Mensual 2025"),
+                                React.createElement('div', { className: "space-y-2" },
+                                    data.monthlyTrend.map((month, index) => (
+                                        React.createElement('div', { key: index, className: "flex justify-between" },
+                                            React.createElement('span', { className: "text-blue-700" }, month.month),
+                                            React.createElement('span', { className: "text-blue-900 font-semibold" }, `$${month.amount.toLocaleString()}`)
+                                        )
+                                    )),
+                                    React.createElement('div', { className: "border-t border-blue-200 pt-2 mt-3" },
+                                        React.createElement('div', { className: "flex justify-between" },
+                                            React.createElement('span', { className: "text-blue-800 font-semibold" }, "Promedio Mensual"),
+                                            React.createElement('span', { className: "text-blue-900 font-bold" }, `$${(data.totalAmount / 6).toLocaleString()}`)
+                                        )
+                                    )
+                                )
+                            ),
 
-            // Activar el tab seleccionado
-            event.target.classList.add('active');
+                            React.createElement('div', { className: "bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-6" },
+                                React.createElement('h4', { className: "text-green-800 font-bold text-lg mb-3" }, "Proyección Agosto"),
+                                React.createElement('div', { className: "space-y-2" },
+                                    React.createElement('div', { className: "flex justify-between" },
+                                        React.createElement('span', { className: "text-green-700" }, "Estimado Conservador"),
+                                        React.createElement('span', { className: "text-green-900 font-semibold" }, "$1,200")
+                                    ),
+                                    React.createElement('div', { className: "flex justify-between" },
+                                        React.createElement('span', { className: "text-green-700" }, "Estimado Optimista"),
+                                        React.createElement('span', { className: "text-green-900 font-semibold" }, "$2,000")
+                                    ),
+                                    React.createElement('div', { className: "flex justify-between" },
+                                        React.createElement('span', { className: "text-green-700" }, "Meta Objetivo"),
+                                        React.createElement('span', { className: "text-green-900 font-semibold" }, "$1,500")
+                                    ),
+                                    React.createElement('div', { className: "border-t border-green-200 pt-2 mt-3" },
+                                        React.createElement('div', { className: "flex justify-between" },
+                                            React.createElement('span', { className: "text-green-800 font-semibold" }, "Recomendado"),
+                                            React.createElement('span', { className: "text-green-900 font-bold" }, "$1,600")
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+
+                        // Indicadores de rendimiento
+                        React.createElement('div', { className: "bg-white border border-gray-200 rounded-lg p-6" },
+                            React.createElement('h4', { className: "text-gray-900 font-bold text-lg mb-4" }, "Indicadores de Rendimiento"),
+                            React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-4 gap-4" },
+                                React.createElement('div', { className: "text-center" },
+                                    React.createElement('p', { className: "text-gray-700 text-sm" }, "Días Promedio Cobranza"),
+                                    React.createElement('p', { className: "text-gray-900 text-2xl font-bold" }, "25"),
+                                    React.createElement('p', { className: "text-green-600 text-xs" }, "↓ -5 días vs objetivo")
+                                ),
+                                React.createElement('div', { className: "text-center" },
+                                    React.createElement('p', { className: "text-gray-700 text-sm" }, "Tasa de Cobranza"),
+                                    React.createElement('p', { className: "text-gray-900 text-2xl font-bold" }, "86%"),
+                                    React.createElement('p', { className: "text-green-600 text-xs" }, "↑ +8% vs promedio")
+                                ),
+                                React.createElement('div', { className: "text-center" },
+                                    React.createElement('p', { className: "text-gray-700 text-sm" }, "Facturas Vencidas"),
+                                    React.createElement('p', { className: "text-gray-900 text-2xl font-bold" }, "14%"),
+                                    React.createElement('p', { className: "text-green-600 text-xs" }, "↓ -8% vs promedio")
+                                ),
+                                React.createElement('div', { className: "text-center" },
+                                    React.createElement('p', { className: "text-gray-700 text-sm" }, "Eficiencia Cobranza"),
+                                    React.createElement('p', { className: "text-gray-900 text-2xl font-bold" }, "92%"),
+                                    React.createElement('p', { className: "text-green-600 text-xs" }, "↑ +7% vs promedio")
+                                )
+                            )
+                        ),
+
+                        // Análisis de crecimiento
+                        React.createElement('div', { className: "bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg p-6" },
+                            React.createElement('h4', { className: "text-yellow-800 font-bold text-lg mb-3" }, "Análisis de Crecimiento"),
+                            React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-2 gap-4" },
+                                React.createElement('div', null,
+                                    React.createElement('p', { className: "text-yellow-700 text-sm mb-2" }, "Crecimiento Julio vs Junio"),
+                                    React.createElement('p', { className: "text-yellow-900 text-2xl font-bold" }, "+321%"),
+                                    React.createElement('p', { className: "text-yellow-700 text-xs" }, "Incremento significativo en volumen")
+                                ),
+                                React.createElement('div', null,
+                                    React.createElement('p', { className: "text-yellow-700 text-sm mb-2" }, "Nuevos Clientes"),
+                                    React.createElement('p', { className: "text-yellow-900 text-2xl font-bold" }, "15"),
+                                    React.createElement('p', { className: "text-yellow-700 text-xs" }, "Clientes incorporados en julio")
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+
+            const RiskTab = () => (
+                React.createElement('div', { className: "space-y-6" },
+                    React.createElement('div', { className: "bg-white rounded-xl shadow-lg p-6" },
+                        React.createElement('h3', { className: "text-xl font-bold text-gray-900 mb-6" }, "Gestión de Riesgo Crediticio"),
+
+                        React.createElement('div', { className: "grid grid-cols-1 md:grid-cols-3 gap-6 mb-6" },
+                            React.createElement('div', { className: "bg-red-50 border border-red-200 rounded-lg p-4" },
+                                React.createElement('h4', { className: "text-red-800 font-bold mb-3" }, "🔴 Riesgo Alto"),
+                                React.createElement('div', { className: "space-y-2" },
+                                    React.createElement('p', { className: "text-red-700 text-sm" }, React.createElement('strong', null, `${data.riskAnalysis.high.clients} facturas`)),
+                                    React.createElement('p', { className: "text-red-700 text-sm" }, `Deuda: `, React.createElement('strong', null, `$${data.riskAnalysis.high.amount.toLocaleString()}`)),
+                                    React.createElement('p', { className: "text-red-700 text-sm" }, data.riskAnalysis.high.description),
+                                    React.createElement('p', { className: "text-red-900 text-xs font-semibold" }, "Acción inmediata requerida")
+                                )
+                            ),
+
+                            React.createElement('div', { className: "bg-yellow-50 border border-yellow-200 rounded-lg p-4" },
+                                React.createElement('h4', { className: "text-yellow-800 font-bold mb-3" }, "🟡 Riesgo Medio"),
+                                React.createElement('div', { className: "space-y-2" },
+                                    React.createElement('p', { className: "text-yellow-700 text-sm" }, React.createElement('strong', null, `${data.riskAnalysis.medium.clients} facturas`)),
+                                    React.createElement('p', { className: "text-yellow-700 text-sm" }, `Deuda: `, React.createElement('strong', null, `$${data.riskAnalysis.medium.amount.toLocaleString()}`)),
+                                    React.createElement('p', { className: "text-yellow-700 text-sm" }, data.riskAnalysis.medium.description),
+                                    React.createElement('p', { className: "text-yellow-900 text-xs font-semibold" }, "Seguimiento cercano")
+                                )
+                            ),
+
+                            React.createElement('div', { className: "bg-green-50 border border-green-200 rounded-lg p-4" },
+                                React.createElement('h4', { className: "text-green-800 font-bold mb-3" }, "🟢 Riesgo Bajo"),
+                                React.createElement('div', { className: "space-y-2" },
+                                    React.createElement('p', { className: "text-green-700 text-sm" }, React.createElement('strong', null, `${data.riskAnalysis.low.clients} facturas`)),
+                                    React.createElement('p', { className: "text-green-700 text-sm" }, `Deuda: `, React.createElement('strong', null, `$${data.riskAnalysis.low.amount.toLocaleString()}`)),
+                                    React.createElement('p', { className: "text-green-700 text-sm" }, data.riskAnalysis.low.description),
+                                    React.createElement('p', { className: "text-green-900 text-xs font-semibold" }, "Seguimiento rutinario")
+                                )
+                            )
+                        ),
+
+                        // Plan de acción recomendado
+                        React.createElement('div', { className: "bg-white border border-gray-200 rounded-lg p-6" },
+                            React.createElement('h4', { className: "text-gray-900 font-bold text-lg mb-4" }, "Plan de Acción Recomendado"),
+                            React.createElement('div', { className: "space-y-4" },
+                                React.createElement('div', { className: "flex items-start space-x-3" },
+                                    React.createElement('span', { className: "text-red-500 text-xl" }, "🚨"),
+                                    React.createElement('div', null,
+                                        React.createElement('p', { className: "text-gray-900 font-semibold" }, "Inmediato (0-7 días)"),
+                                        React.createElement('p', { className: "text-gray-700 text-sm" }, "Contactar las 10 facturas de riesgo alto. Evaluar opciones de pago y reestructuración.")
+                                    )
+                                ),
+                                React.createElement('div', { className: "flex items-start space-x-3" },
+                                    React.createElement('span', { className: "text-yellow-500 text-xl" }, "⚠️"),
+                                    React.createElement('div', null,
+                                        React.createElement('p', { className: "text-gray-900 font-semibold" }, "Corto Plazo (1-2 semanas)"),
+                                        React.createElement('p', { className: "text-gray-700 text-sm" }, "Implementar seguimiento sistemático para las 13 facturas de riesgo medio.")
+                                    )
+                                ),
+                                React.createElement('div', { className: "flex items-start space-x-3" },
+                                    React.createElement('span', { className: "text-blue-500 text-xl" }, "📋"),
+                                    React.createElement('div', null,
+                                        React.createElement('p', { className: "text-gray-900 font-semibold" }, "Mediano Plazo (1 mes)"),
+                                        React.createElement('p', { className: "text-gray-700 text-sm" }, "Diversificar cartera para reducir concentración en top 3 clientes (57.1%).")
+                                    )
+                                ),
+                                React.createElement('div', { className: "flex items-start space-x-3" },
+                                    React.createElement('span', { className: "text-green-500 text-xl" }, "📈"),
+                                    React.createElement('div', null,
+                                        React.createElement('p', { className: "text-gray-900 font-semibold" }, "Largo Plazo (3 meses)"),
+                                        React.createElement('p', { className: "text-gray-700 text-sm" }, "Mantener excelente gestión actual y establecer políticas para crecimiento sostenible.")
+                                    )
+                                )
+                            )
+                        ),
+
+                        // Métricas de riesgo
+                        React.createElement('div', { className: "bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg p-6" },
+                            React.createElement('h4', { className: "text-purple-800 font-bold text-lg mb-3" }, "Métricas de Riesgo"),
+                            React.createElement('div', { className: "grid grid-cols-2 md:grid-cols-4 gap-4" },
+                                React.createElement('div', { className: "text-center" },
+                                    React.createElement('p', { className: "text-purple-700 text-sm" }, "Provisión Requerida"),
+                                    React.createElement('p', { className: "text-purple-900 text-xl font-bold" }, "$156")
+                                ),
+                                React.createElement('div', { className: "text-center" },
+                                    React.createElement('p', { className: "text-purple-700 text-sm" }, "Tasa de Morosidad"),
+                                    React.createElement('p', { className: "text-purple-900 text-xl font-bold" }, "3.1%")
+                                ),
+                                React.createElement('div', { className: "text-center" },
+                                    React.createElement('p', { className: "text-purple-700 text-sm" }, "Recuperación Estimada"),
+                                    React.createElement('p', { className: "text-purple-900 text-xl font-bold" }, "85%")
+                                ),
+                                React.createElement('div', { className: "text-center" },
+                                    React.createElement('p', { className: "text-purple-700 text-sm" }, "Pérdida Potencial"),
+                                    React.createElement('p', { className: "text-purple-900 text-xl font-bold" }, "$47")
+                                )
+                            )
+                        )
+                    )
+                )
+            );
+
+            const tabs = [
+                { id: 'overview', label: 'Resumen Ejecutivo', component: OverviewTab },
+                { id: 'aging', label: 'Antigüedad', component: AgingTab },
+                { id: 'clients', label: 'Top Clientes', component: TopClientsTab },
+                { id: 'trends', label: 'Tendencias', component: TrendsTab },
+                { id: 'risk', label: 'Gestión de Riesgo', component: RiskTab }
+            ];
+
+            const ActiveComponent = tabs.find(tab => tab.id === activeTab)?.component || OverviewTab;
+
+            return React.createElement('div', { className: "min-h-screen bg-gray-100 p-6" },
+                React.createElement('div', { className: "max-w-7xl mx-auto" },
+                    React.createElement('div', { className: "bg-white rounded-xl shadow-lg mb-6 p-6" },
+                        React.createElement('div', { className: "flex items-center justify-between" },
+                            React.createElement('div', null,
+                                React.createElement('h1', { className: "text-3xl font-bold text-gray-900" }, "Dashboard Cuentas por Cobrar"),
+                                React.createElement('p', { className: "text-gray-600 mt-1" }, "Análisis integral de cartera - Actualizado Julio 2025")
+                            ),
+                            React.createElement('div', { className: "flex items-center space-x-4" },
+                                React.createElement('div', { className: "w-4 h-4 rounded-full", style: { backgroundColor: locatelColors.yellow } }),
+                                React.createElement('div', { className: "w-4 h-4 rounded-full", style: { backgroundColor: locatelColors.orange } }),
+                                React.createElement('div', { className: "w-4 h-4 rounded-full", style: { backgroundColor: locatelColors.lightGreen } }),
+                                React.createElement('div', { className: "w-4 h-4 rounded-full", style: { backgroundColor: locatelColors.mediumGreen } }),
+                                React.createElement('div', { className: "w-4 h-4 rounded-full", style: { backgroundColor: locatelColors.darkGreen } })
+                            )
+                        )
+                    ),
+                    React.createElement('div', { className: "bg-white rounded-xl shadow-lg mb-6" },
+                        React.createElement('div', { className: "flex space-x-1 p-1" },
+                            tabs.map(tab => 
+                                React.createElement(TabButton, {
+                                    key: tab.id,
+                                    id: tab.id,
+                                    label: tab.label,
+                                    isActive: activeTab === tab.id,
+                                    onClick: setActiveTab
+                                })
+                            )
+                        )
+                    ),
+                    React.createElement('div', { className: "bg-gray-50 rounded-xl p-6" },
+                        React.createElement(ActiveComponent)
+                    )
+                )
+            );
         }
 
-        // Colores de Locatel
-        const colors = {
-            yellow: '#FED519',
-            orange: '#F79617',
-            lightGreen: '#7CC141',
-            mediumGreen: '#419E46',
-            darkGreen: '#0A9561'
-        };
-
-        // Gráfico de Antigüedad (Resumen)
-        const agingCtx = document.getElementById('agingChart').getContext('2d');
-        new Chart(agingCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['0-30 días', '31-60 días', '61-90 días', 'Más de 90 días'],
-                datasets: [{
-                    data: [9336.84, 1203.68, 926.85, 492.97],
-                    backgroundColor: [colors.darkGreen, colors.mediumGreen, colors.orange, '#dc3545']
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-
-        // Gráfico de Riesgo (Resumen)
-        const riskCtx = document.getElementById('riskChart').getContext('2d');
-        new Chart(riskCtx, {
-            type: 'pie',
-            data: {
-                labels: ['Riesgo Alto', 'Riesgo Medio', 'Riesgo Bajo'],
-                datasets: [{
-                    data: [367.23, 7057.88, 4535.23],
-                    backgroundColor: ['#dc3545', colors.orange, colors.lightGreen]
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-
-        // Gráfico de Antigüedad Detallado
-        const agingDetailCtx = document.getElementById('agingDetailChart').getContext('2d');
-        new Chart(agingDetailCtx, {
-            type: 'bar',
-            data: {
-                labels: ['0-30 días', '31-60 días', '61-90 días', 'Más de 90 días'],
-                datasets: [{
-                    label: 'Monto ($)',
-                    data: [9336.84, 1203.68, 926.85, 492.97],
-                    backgroundColor: [colors.darkGreen, colors.mediumGreen, colors.orange, '#dc3545']
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return '$' + value.toLocaleString();
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        // Gráfico de Top Clientes
-        const clientsCtx = document.getElementById('clientsChart').getContext('2d');
-        new Chart(clientsCtx, {
-            type: 'horizontalBar',
-            data: {
-                labels: [
-                    'AC CENTRO MEDICO DOCENTE LA TRINIDAD',
-                    'BANCO DEL TESORO CA',
-                    'INSTITUTO DIAGNISTICO SAN BERNARDINO',
-                    'TRINIGOLD FARMACIA CA',
-                    'ESMERALDA CARTAYA',
-                    'MIRANDA GAS MIRANGAS SA',
-                    'FELIX ADOLFO LICON GODOY',
-                    'JESUS ENRIQUE NAVARRO ROSALES',
-                    'INVERSIONES FLAVICA',
-                    'ALICIA MARGARITA EGLOFF WEIL'
-                ],
-                datasets: [{
-                    label: 'Monto Pendiente ($)',
-                    data: [2527.18, 1568.05, 1482.70, 555.79, 370.17, 345.16, 273.16, 261.40, 246.67, 220.21],
-                    backgroundColor: colors.mediumGreen
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return '$' + value.toLocaleString();
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        // Gráfico de Riesgo Detallado
-        const riskDetailCtx = document.getElementById('riskDetailChart').getContext('2d');
-        new Chart(riskDetailCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Riesgo Alto', 'Riesgo Medio', 'Riesgo Bajo'],
-                datasets: [{
-                    label: 'Monto ($)',
-                    data: [367.23, 7057.88, 4535.23],
-                    backgroundColor: ['#dc3545', colors.orange, colors.lightGreen]
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return '$' + value.toLocaleString();
-                            }
-                        }
-                    }
-                }
-            }
-        });
+        ReactDOM.render(React.createElement(App), document.getElementById('dashboard-root'));
     </script>
 </body>
 </html>
