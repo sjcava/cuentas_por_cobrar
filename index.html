@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Cuentas por Cobrar - Locatel (Actualizado Agosto 2025)</title>
+    <title>Dashboard Cuentas por Cobrar - Locatel (Agosto 2025)</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         * {
@@ -99,7 +99,7 @@
             padding: 25px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-left: 5px solid #7CC141;
+            border-left: 5px solid #F79617;
             transition: transform 0.3s ease;
         }
 
@@ -108,7 +108,7 @@
         }
 
         .metric-card h3 {
-            color: #419E46;
+            color: #F79617;
             font-size: 0.9em;
             margin-bottom: 10px;
             text-transform: uppercase;
@@ -118,7 +118,7 @@
         .metric-card .value {
             font-size: 2.2em;
             font-weight: bold;
-            color: #0A9561;
+            color: #419E46;
             margin-bottom: 5px;
         }
 
@@ -167,7 +167,7 @@
         }
 
         .alert-title::before {
-            content: "⚠️";
+            content: "💰";
             margin-right: 10px;
             font-size: 1.2em;
         }
@@ -207,7 +207,7 @@
 
         .client-amount {
             font-weight: bold;
-            color: #0A9561;
+            color: #F79617;
             font-size: 1.1em;
         }
 
@@ -250,14 +250,14 @@
 </head>
 <body>
     <div class="header">
-        <h1>📊 Dashboard Cuentas por Cobrar</h1>
-        <p>Sistema de Gestión Financiera - Locatel</p>
+        <h1>💰 Dashboard Cuentas por Cobrar</h1>
+        <p>Sistema de Gestión de Clientes - Locatel</p>
     </div>
 
     <div class="container">
         <div class="update-info">
-            <strong>🔄 Última actualización:</strong> 1 de Agosto 2025 |
-            <strong>📈 Datos procesados:</strong> 292 facturas de 97 clientes únicos
+            <strong>🔄 Última actualización:</strong> 11 de Agosto 2025 |
+            <strong>📊 Datos procesados:</strong> 266 facturas de 96 clientes activos
         </div>
 
         <div class="nav-tabs">
@@ -265,7 +265,7 @@
             <button class="nav-tab" onclick="showTab('aging')">📅 Antigüedad</button>
             <button class="nav-tab" onclick="showTab('clients')">👥 Top Clientes</button>
             <button class="nav-tab" onclick="showTab('trends')">📈 Tendencias</button>
-            <button class="nav-tab" onclick="showTab('risk')">⚠️ Gestión de Riesgo</button>
+            <button class="nav-tab" onclick="showTab('risk')">⚡ Gestión de Riesgo</button>
         </div>
 
         <!-- TAB: RESUMEN -->
@@ -273,33 +273,33 @@
             <div class="metrics-grid">
                 <div class="metric-card">
                     <h3>Total Facturas</h3>
-                    <div class="value">292</div>
-                    <div class="change">-72 vs período anterior</div>
+                    <div class="value">266</div>
+                    <div class="change">Facturas por cobrar</div>
                 </div>
                 <div class="metric-card">
                     <h3>Monto Total</h3>
-                    <div class="value">$7,653</div>
-                    <div class="change">-31.9% vs período anterior</div>
+                    <div class="value">$6,750</div>
+                    <div class="change">Total por cobrar</div>
                 </div>
                 <div class="metric-card">
-                    <h3>Clientes Únicos</h3>
-                    <div class="value">97</div>
-                    <div class="change">-18 clientes menos</div>
+                    <h3>Clientes Activos</h3>
+                    <div class="value">96</div>
+                    <div class="change">Clientes únicos</div>
                 </div>
                 <div class="metric-card">
                     <h3>Promedio por Factura</h3>
-                    <div class="value">$26.21</div>
-                    <div class="change">-15.1% vs período anterior</div>
+                    <div class="value">$25.38</div>
+                    <div class="change">Monto promedio</div>
                 </div>
                 <div class="metric-card">
                     <h3>Días Promedio Cobro</h3>
-                    <div class="value">27.3</div>
-                    <div class="change">+2.5 días vs período anterior</div>
+                    <div class="value">25.2</div>
+                    <div class="change">Días de cobro</div>
                 </div>
                 <div class="metric-card">
-                    <h3>Tasa de Recuperación</h3>
-                    <div class="value">81.5%</div>
-                    <div class="change">-6.2% vs período anterior</div>
+                    <h3>Facturas Vencidas</h3>
+                    <div class="value">88</div>
+                    <div class="change">33.1% del total</div>
                 </div>
             </div>
 
@@ -315,15 +315,15 @@
             </div>
 
             <div class="alert-section">
-                <div class="alert-title">Alertas Críticas</div>
+                <div class="alert-title">Alertas Críticas de Cobranza</div>
                 <div class="alert-item">
-                    <strong>5 facturas</strong> con más de 90 días de antigüedad por <strong>$112.17</strong>
+                    <strong>88 facturas vencidas</strong> por un total de <strong>$1,047.67</strong> requieren gestión de cobranza
                 </div>
                 <div class="alert-item">
-                    <strong>42 facturas</strong> clasificadas como riesgo medio por <strong>$5,667.54</strong>
+                    <strong>3 facturas</strong> con más de 120 días de antigüedad por <strong>$128.60</strong>
                 </div>
                 <div class="alert-item">
-                    <strong>2 clientes principales</strong> concentran el 39.3% del total de la cartera
+                    <strong>Top 5 clientes</strong> concentran el 54.8% del total por cobrar ($3,700.26)
                 </div>
             </div>
         </div>
@@ -332,35 +332,43 @@
         <div id="aging" class="tab-content">
             <div class="metrics-grid">
                 <div class="metric-card">
-                    <h3>0-30 Días</h3>
-                    <div class="value">$6,238</div>
-                    <div class="change">189 facturas (81.5%)</div>
+                    <h3>Corriente (0-30 días)</h3>
+                    <div class="value">$5,703</div>
+                    <div class="change">178 facturas (84.5%)</div>
                 </div>
-                <div class="metric-card">
-                    <h3>31-60 Días</h3>
-                    <div class="value">$1,223</div>
-                    <div class="change">91 facturas (16.0%)</div>
+                <div class="metric-card risk-medium">
+                    <h3>Vencida (31-60 días)</h3>
+                    <div class="value">$770</div>
+                    <div class="change">69 facturas (11.4%)</div>
                 </div>
-                <div class="metric-card">
-                    <h3>61-90 Días</h3>
-                    <div class="value">$80</div>
-                    <div class="change">7 facturas (1.0%)</div>
+                <div class="metric-card risk-high">
+                    <h3>Vencida (61-90 días)</h3>
+                    <div class="value">$149</div>
+                    <div class="change">16 facturas (2.2%)</div>
                 </div>
-                <div class="metric-card">
-                    <h3>Más de 90 Días</h3>
-                    <div class="value">$112</div>
-                    <div class="change">5 facturas (1.5%)</div>
+                <div class="metric-card risk-high">
+                    <h3>Vencida (Más de 120 días)</h3>
+                    <div class="value">$129</div>
+                    <div class="change">3 facturas (1.9%)</div>
                 </div>
             </div>
 
             <div class="chart-container">
-                <div class="chart-title">Evolución de Antigüedad</div>
-                <div id="aging-trend-chart"></div>
-            </div>
-
-            <div class="chart-container">
-                <div class="chart-title">Análisis Detallado por Período</div>
+                <div class="chart-title">Análisis Detallado por Período de Antigüedad</div>
                 <div id="aging-detail-chart"></div>
+            </div>
+
+            <div class="alert-section">
+                <div class="alert-title">Situación de Cobranza</div>
+                <div class="alert-item">
+                    <strong>Cartera Saludable:</strong> 66.9% de las facturas están al corriente ($5,702.82)
+                </div>
+                <div class="alert-item">
+                    <strong>Atención Requerida:</strong> 33.1% de facturas vencidas requieren gestión activa
+                </div>
+                <div class="alert-item">
+                    <strong>Riesgo Alto:</strong> 19 facturas con más de 60 días requieren acción inmediata
+                </div>
             </div>
         </div>
 
@@ -368,46 +376,49 @@
         <div id="clients" class="tab-content">
             <div class="chart-container">
                 <div class="chart-title">Top 10 Clientes por Monto Pendiente</div>
+                <div style="text-align: center; font-size: 0.9em; color: #666; margin-bottom: 15px; font-style: italic;">
+                    (*) Los valores incluyen facturas corrientes y vencidas
+                </div>
                 <div class="client-list">
                     <div class="client-item">
-                        <div class="client-name">1. INSTITUTO DIAGNISTICO SAN BERNARDINO</div>
-                        <div class="client-amount">$2,024.69</div>
+                        <div class="client-name">1. AC CENTRO MEDICO DOCENTE LA TRINIDAD</div>
+                        <div class="client-amount">$1,686.56</div>
                     </div>
                     <div class="client-item">
-                        <div class="client-name">2. AC CENTRO MEDICO DOCENTE LA TRINIDAD</div>
-                        <div class="client-amount">$986.06</div>
+                        <div class="client-name">2. BANCO DEL TESORO CA</div>
+                        <div class="client-amount">$863.10</div>
                     </div>
                     <div class="client-item">
-                        <div class="client-name">3. TRINIGOLD FARMACIA CA</div>
-                        <div class="client-amount">$615.99</div>
+                        <div class="client-name">3. MIRANDA GAS MIRANGAS SA</div>
+                        <div class="client-amount">$448.79</div>
                     </div>
                     <div class="client-item">
-                        <div class="client-name">4. BANCO DEL TESORO CA</div>
-                        <div class="client-amount">$371.94</div>
+                        <div class="client-name">4. Jesus Enrique Navarro Rosales</div>
+                        <div class="client-amount">$206.36</div>
                     </div>
                     <div class="client-item">
-                        <div class="client-name">5. INVERSIONES FLAVICA</div>
-                        <div class="client-amount">$246.67</div>
-                    </div>
-                    <div class="client-item">
-                        <div class="client-name">6. CLUB PUERTO AZUL AC</div>
-                        <div class="client-amount">$228.32</div>
-                    </div>
-                    <div class="client-item">
-                        <div class="client-name">7. Alicia Margarita Egloff Weil</div>
-                        <div class="client-amount">$220.21</div>
-                    </div>
-                    <div class="client-item">
-                        <div class="client-name">8. INSTITUTO CUMBRES</div>
+                        <div class="client-name">5. INSTITUTO CUMBRES</div>
                         <div class="client-amount">$205.45</div>
                     </div>
                     <div class="client-item">
-                        <div class="client-name">9. Jesus Enrique Navarro Rosales</div>
-                        <div class="client-amount">$180.94</div>
+                        <div class="client-name">6. Christian Jose Clavier Gruber</div>
+                        <div class="client-amount">$176.92</div>
                     </div>
                     <div class="client-item">
-                        <div class="client-name">10. MIRANDA GAS MIRANGAS SA</div>
-                        <div class="client-amount">$144.56</div>
+                        <div class="client-name">7. JOSE CLAVIER</div>
+                        <div class="client-amount">$152.51</div>
+                    </div>
+                    <div class="client-item">
+                        <div class="client-name">8. MARIA CLAVIER</div>
+                        <div class="client-amount">$135.20</div>
+                    </div>
+                    <div class="client-item">
+                        <div class="client-name">9. Miriam Zulay Contreras De Alayon</div>
+                        <div class="client-amount">$115.01</div>
+                    </div>
+                    <div class="client-item">
+                        <div class="client-name">10. TERESA MORALES</div>
+                        <div class="client-amount">$105.84</div>
                     </div>
                 </div>
             </div>
@@ -418,8 +429,8 @@
                     <div id="client-distribution-chart"></div>
                 </div>
                 <div class="chart-container">
-                    <div class="chart-title">Concentración de Cartera</div>
-                    <div id="portfolio-concentration-chart"></div>
+                    <div class="chart-title">Concentración de Cobranza</div>
+                    <div id="collection-concentration-chart"></div>
                 </div>
             </div>
         </div>
@@ -427,18 +438,18 @@
         <!-- TAB: TENDENCIAS -->
         <div id="trends" class="tab-content">
             <div class="chart-container">
-                <div class="chart-title">Tendencia Mensual de Cuentas por Cobrar</div>
+                <div class="chart-title">Evolución Mensual de Facturas</div>
                 <div id="monthly-trend-chart"></div>
             </div>
 
             <div class="two-column">
                 <div class="chart-container">
-                    <div class="chart-title">Evolución de Días de Cobro</div>
-                    <div id="collection-days-chart"></div>
+                    <div class="chart-title">Distribución por Mes</div>
+                    <div id="monthly-distribution-chart"></div>
                 </div>
                 <div class="chart-container">
-                    <div class="chart-title">Tasa de Recuperación</div>
-                    <div id="recovery-rate-chart"></div>
+                    <div class="chart-title">Promedio de Días de Cobro</div>
+                    <div id="collection-days-chart"></div>
                 </div>
             </div>
         </div>
@@ -448,36 +459,39 @@
             <div class="metrics-grid">
                 <div class="metric-card risk-high">
                     <h3>Riesgo Alto</h3>
-                    <div class="value">$0</div>
-                    <div class="change">0 facturas</div>
+                    <div class="value">$129</div>
+                    <div class="change">3 facturas</div>
                 </div>
                 <div class="metric-card risk-medium">
                     <h3>Riesgo Medio</h3>
-                    <div class="value">$5,668</div>
-                    <div class="change">42 facturas</div>
+                    <div class="value">$4,696</div>
+                    <div class="change">110 facturas</div>
                 </div>
                 <div class="metric-card risk-low">
                     <h3>Riesgo Bajo</h3>
-                    <div class="value">$1,985</div>
-                    <div class="change">250 facturas</div>
+                    <div class="value">$1,926</div>
+                    <div class="change">153 facturas</div>
                 </div>
             </div>
 
             <div class="chart-container">
-                <div class="chart-title">Matriz de Riesgo</div>
+                <div class="chart-title">Matriz de Riesgo de Cobranza</div>
                 <div id="risk-matrix-chart"></div>
             </div>
 
             <div class="alert-section">
-                <div class="alert-title">Recomendaciones de Acción</div>
+                <div class="alert-title">Plan de Acción de Cobranza</div>
                 <div class="alert-item">
-                    <strong>Seguimiento Inmediato:</strong> Contactar a los 2 principales deudores que representan el 39.3% del total
+                    <strong>Prioridad 1:</strong> Gestionar inmediatamente 3 facturas de alto riesgo ($129) - Más de 120 días
                 </div>
                 <div class="alert-item">
-                    <strong>Revisión de Políticas:</strong> Evaluar términos de crédito para clientes con más de 60 días
+                    <strong>Prioridad 2:</strong> Contactar clientes con 110 facturas de riesgo medio ($4,696)
                 </div>
                 <div class="alert-item">
-                    <strong>Optimización:</strong> Implementar recordatorios automáticos a los 20 días para mejorar el DSO
+                    <strong>Seguimiento:</strong> Monitorear 153 facturas de bajo riesgo para prevenir vencimientos
+                </div>
+                <div class="alert-item">
+                    <strong>Estrategia:</strong> Implementar recordatorios automáticos para facturas próximas a vencer
                 </div>
             </div>
         </div>
@@ -527,11 +541,11 @@
         function renderOverviewCharts() {
             // Gráfico de torta - Antigüedad
             const agingData = [{
-                values: [6238.11, 1222.81, 79.78, 112.17],
-                labels: ['0-30 días', '31-60 días', '61-90 días', 'Más de 90 días'],
+                values: [5702.82, 769.94, 149.13, 128.60],
+                labels: ['Corriente (0-30 días)', 'Vencida (31-60 días)', 'Vencida (61-90 días)', 'Vencida (+120 días)'],
                 type: 'pie',
                 marker: {
-                    colors: locatelColors
+                    colors: ['#419E46', '#F79617', '#ff6b6b', '#dc3545']
                 },
                 textinfo: 'label+percent',
                 textposition: 'outside'
@@ -545,18 +559,18 @@
 
             // Gráfico de barras - Top 5 clientes
             const topClientsData = [{
-                x: [2024.69, 986.06, 615.99, 371.94, 246.67],
-                y: ['INSTITUTO DIAGNISTICO SAN BERNARDINO', 'AC CENTRO MEDICO DOCENTE LA TRINIDAD', 'TRINIGOLD FARMACIA CA', 'BANCO DEL TESORO CA', 'INVERSIONES FLAVICA'],
+                x: [1686.56, 863.10, 448.79, 206.36, 205.45],
+                y: ['AC CENTRO MEDICO DOCENTE LA TRINIDAD', 'BANCO DEL TESORO CA', 'MIRANDA GAS MIRANGAS SA', 'Jesus Enrique Navarro Rosales', 'INSTITUTO CUMBRES'],
                 type: 'bar',
                 orientation: 'h',
                 marker: {
-                    color: locatelColors[2]
+                    color: locatelColors[1]
                 }
             }];
 
             Plotly.newPlot('top-clients-chart', topClientsData, {
                 height: 300,
-                margin: {t: 20, b: 40, l: 200, r: 40},
+                margin: {t: 20, b: 40, l: 250, r: 40},
                 xaxis: {title: 'Monto ($)'},
                 yaxis: {title: ''}
             });
@@ -564,39 +578,22 @@
 
         // Gráficos de Antigüedad
         function renderAgingCharts() {
-            // Gráfico de tendencia de antigüedad
-            const agingTrendData = [{
-                x: ['Jul 2024', 'Ago 2024', 'Sep 2024', 'Oct 2024', 'Nov 2024', 'Dic 2024', 'Ene 2025', 'Feb 2025', 'Mar 2025', 'Abr 2025', 'May 2025', 'Jun 2025', 'Jul 2025', 'Ago 2025'],
-                y: [8500, 9200, 8800, 9500, 10200, 11000, 10800, 9800, 10500, 11200, 10900, 11500, 11238, 7653],
-                type: 'scatter',
-                mode: 'lines+markers',
-                line: {color: locatelColors[2], width: 3},
-                marker: {size: 8, color: locatelColors[1]}
-            }];
-
-            Plotly.newPlot('aging-trend-chart', agingTrendData, {
-                height: 400,
-                title: 'Evolución del Monto Total',
-                xaxis: {title: 'Período'},
-                yaxis: {title: 'Monto ($)'}
-            });
-
             // Gráfico detallado por período
             const agingDetailData = [
                 {
-                    x: ['0-30 días', '31-60 días', '61-90 días', 'Más de 90 días'],
-                    y: [189, 91, 7, 5],
+                    x: ['Corriente (0-30)', 'Vencida (31-60)', 'Vencida (61-90)', 'Vencida (+120)'],
+                    y: [178, 69, 16, 3],
                     name: 'Cantidad de Facturas',
                     type: 'bar',
                     marker: {color: locatelColors[0]}
                 },
                 {
-                    x: ['0-30 días', '31-60 días', '61-90 días', 'Más de 90 días'],
-                    y: [6238.11, 1222.81, 79.78, 112.17],
+                    x: ['Corriente (0-30)', 'Vencida (31-60)', 'Vencida (61-90)', 'Vencida (+120)'],
+                    y: [5702.82, 769.94, 149.13, 128.60],
                     name: 'Monto ($)',
                     type: 'bar',
                     yaxis: 'y2',
-                    marker: {color: locatelColors[2]}
+                    marker: {color: locatelColors[1]}
                 }
             ];
 
@@ -612,7 +609,7 @@
         function renderClientCharts() {
             // Distribución por cliente (top 10 vs resto)
             const clientDistData = [{
-                values: [5223.83, 2429.04],
+                values: [4095.74, 2654.75],
                 labels: ['Top 10 Clientes', 'Otros Clientes'],
                 type: 'pie',
                 marker: {
@@ -625,15 +622,15 @@
                 margin: {t: 0, b: 0, l: 0, r: 0}
             });
 
-            // Concentración de cartera
+            // Concentración de cobranza
             const concentrationData = [{
                 x: ['Top 3', 'Top 5', 'Top 10', 'Todos'],
-                y: [47.8, 55.0, 68.3, 100],
+                y: [44.6, 54.8, 60.7, 100],
                 type: 'bar',
-                marker: {color: locatelColors[4]}
+                marker: {color: locatelColors[2]}
             }];
 
-            Plotly.newPlot('portfolio-concentration-chart', concentrationData, {
+            Plotly.newPlot('collection-concentration-chart', concentrationData, {
                 height: 300,
                 xaxis: {title: 'Grupo de Clientes'},
                 yaxis: {title: 'Porcentaje Acumulado (%)'}
@@ -642,49 +639,47 @@
 
         // Gráficos de Tendencias
         function renderTrendCharts() {
-            // Tendencia mensual
+            // Evolución mensual
             const monthlyData = [{
-                x: ['Jul 2024', 'Ago 2024', 'Sep 2024', 'Oct 2024', 'Nov 2024', 'Dic 2024', 'Ene 2025', 'Feb 2025', 'Mar 2025', 'Abr 2025', 'May 2025', 'Jun 2025', 'Jul 2025', 'Ago 2025'],
-                y: [8500, 9200, 8800, 9500, 10200, 11000, 10800, 9800, 10500, 11200, 10900, 11500, 11238, 7653],
-                type: 'scatter',
-                mode: 'lines+markers',
-                line: {color: locatelColors[2], width: 3}
-            }];
-
-            Plotly.newPlot('monthly-trend-chart', monthlyData, {
-                height: 400,
-                xaxis: {title: 'Mes'},
-                yaxis: {title: 'Monto Total ($)'}
-            });
-
-            // Días de cobro
-            const collectionDaysData = [{
-                x: ['Jul 2024', 'Ago 2024', 'Sep 2024', 'Oct 2024', 'Nov 2024', 'Dic 2024', 'Ene 2025', 'Feb 2025', 'Mar 2025', 'Abr 2025', 'May 2025', 'Jun 2025', 'Jul 2025', 'Ago 2025'],
-                y: [28, 27.5, 26.8, 26.2, 25.8, 25.5, 25.2, 24.9, 24.6, 24.3, 24.1, 24.0, 24.8, 27.3],
+                x: ['Feb 2025', 'Mar 2025', 'Abr 2025', 'May 2025', 'Jun 2025', 'Jul 2025', 'Ago 2025'],
+                y: [2, 8, 15, 32, 89, 95, 25],
                 type: 'scatter',
                 mode: 'lines+markers',
                 line: {color: locatelColors[1], width: 3}
             }];
 
-            Plotly.newPlot('collection-days-chart', collectionDaysData, {
-                height: 300,
+            Plotly.newPlot('monthly-trend-chart', monthlyData, {
+                height: 400,
                 xaxis: {title: 'Mes'},
-                yaxis: {title: 'Días Promedio'}
+                yaxis: {title: 'Número de Facturas'}
             });
 
-            // Tasa de recuperación
-            const recoveryData = [{
-                x: ['Jul 2024', 'Ago 2024', 'Sep 2024', 'Oct 2024', 'Nov 2024', 'Dic 2024', 'Ene 2025', 'Feb 2025', 'Mar 2025', 'Abr 2025', 'May 2025', 'Jun 2025', 'Jul 2025', 'Ago 2025'],
-                y: [85.4, 86.1, 86.8, 87.2, 87.5, 87.1, 86.9, 87.3, 87.6, 87.8, 87.4, 87.7, 87.7, 81.5],
-                type: 'scatter',
-                mode: 'lines+markers',
-                line: {color: locatelColors[4], width: 3}
+            // Distribución mensual
+            const monthlyDistData = [{
+                x: ['Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago'],
+                y: [2, 8, 15, 32, 89, 95, 25],
+                type: 'bar',
+                marker: {color: locatelColors[2]}
             }];
 
-            Plotly.newPlot('recovery-rate-chart', recoveryData, {
+            Plotly.newPlot('monthly-distribution-chart', monthlyDistData, {
                 height: 300,
                 xaxis: {title: 'Mes'},
-                yaxis: {title: 'Tasa de Recuperación (%)'}
+                yaxis: {title: 'Cantidad de Facturas'}
+            });
+
+            // Días de cobro promedio
+            const collectionDaysData = [{
+                x: ['Promedio General'],
+                y: [25.2],
+                type: 'bar',
+                marker: {color: locatelColors[4]}
+            }];
+
+            Plotly.newPlot('collection-days-chart', collectionDaysData, {
+                height: 300,
+                xaxis: {title: 'Métrica'},
+                yaxis: {title: 'Días'}
             });
         }
 
@@ -693,7 +688,7 @@
             // Matriz de riesgo
             const riskData = [{
                 x: ['Bajo', 'Medio', 'Alto'],
-                y: [1985.33, 5667.54, 0],
+                y: [1926.21, 4695.68, 128.60],
                 type: 'bar',
                 marker: {
                     color: ['#7CC141', '#F79617', '#dc3545']
