@@ -3,216 +3,369 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Cuentas por Cobrar - Locatel (Octubre 2025 - Actualizado)</title>
+    <title>Dashboard Cuentas por Cobrar - Locatel (Diciembre 2025 - Actualizado)</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --locatel-yellow: #FED519;
+            --locatel-orange: #F79617;
+            --locatel-green-light: #7CC141;
+            --locatel-green: #419E46;
+            --locatel-green-dark: #0A9561;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --text-dark: #1e293b;
+            --text-medium: #475569;
+            --text-light: #64748b;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Source Sans Pro', sans-serif;
+            background: var(--bg-gradient);
             min-height: 100vh;
+            color: var(--text-dark);
         }
 
         .header {
-            background: linear-gradient(135deg, #FED519 0%, #F79617 50%, #419E46 100%);
+            background: linear-gradient(135deg, var(--locatel-yellow) 0%, var(--locatel-orange) 50%, var(--locatel-green) 100%);
             color: white;
-            padding: 20px;
+            padding: 30px 20px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 32px rgba(254, 213, 25, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
         }
 
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-family: 'Playfair Display', serif;
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
         }
 
         .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
+            font-size: 1.3em;
+            font-weight: 300;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 30px 20px;
         }
 
         .nav-tabs {
             display: flex;
             background: white;
-            border-radius: 10px 10px 0 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 16px 16px 0 0;
+            box-shadow: var(--card-shadow);
             margin-bottom: 0;
+            overflow: hidden;
         }
 
         .nav-tab {
             flex: 1;
-            padding: 15px 20px;
-            background: #f8f9fa;
+            padding: 20px 25px;
+            background: #f8fafc;
             border: none;
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
-            transition: all 0.3s ease;
-            border-radius: 10px 10px 0 0;
-            color: #333;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--text-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--locatel-green), var(--locatel-green-light));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-tab span {
+            position: relative;
+            z-index: 1;
         }
 
         .nav-tab.active {
-            background: linear-gradient(135deg, #7CC141, #419E46);
+            background: linear-gradient(135deg, var(--locatel-green), var(--locatel-green-light));
             color: white;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+        }
+
+        .nav-tab.active::before {
+            opacity: 1;
         }
 
         .nav-tab:hover:not(.active) {
-            background: #e9ecef;
-            transform: translateY(-1px);
+            background: #e2e8f0;
+            transform: translateY(-2px);
+            color: var(--locatel-orange);
         }
 
         .tab-content {
             display: none;
             background: white;
-            padding: 30px;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 40px;
+            border-radius: 0 0 16px 16px;
+            box-shadow: var(--card-shadow);
+            animation: fadeIn 0.5s ease;
         }
 
         .tab-content.active {
             display: block;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
         }
 
         .metric-card {
-            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-left: 5px solid #F79617;
-            transition: transform 0.3s ease;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            border-left: 6px solid var(--locatel-orange);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -50px;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(247, 150, 23, 0.1), transparent);
+            border-radius: 50%;
         }
 
         .metric-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
         }
 
         .metric-card h3 {
-            color: #F79617;
+            color: var(--locatel-orange);
             font-size: 0.9em;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            font-weight: 600;
         }
 
         .metric-card .value {
-            font-size: 2.2em;
-            font-weight: bold;
-            color: #419E46;
-            margin-bottom: 5px;
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--locatel-green);
+            margin-bottom: 10px;
+            font-family: 'Playfair Display', serif;
         }
 
         .metric-card .change {
             font-size: 0.9em;
-            color: #666;
+            color: var(--text-medium);
+            font-weight: 400;
         }
 
         .chart-container {
             background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-bottom: 25px;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .chart-container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
         }
 
         .chart-title {
-            font-size: 1.4em;
-            color: #419E46;
-            margin-bottom: 20px;
+            font-size: 1.5em;
+            color: var(--locatel-green-dark);
+            margin-bottom: 25px;
             text-align: center;
             font-weight: 600;
+            font-family: 'Playfair Display', serif;
         }
 
         .two-column {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px;
+            gap: 30px;
         }
 
         .alert-section {
-            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-            border: 1px solid #7CC141;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border: 2px solid var(--locatel-green-light);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .alert-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(124, 193, 65, 0.1), transparent);
         }
 
         .alert-title {
-            color: #419E46;
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-bottom: 15px;
+            color: var(--locatel-green);
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
+            font-family: 'Playfair Display', serif;
         }
 
         .alert-title::before {
-            content: "✅";
-            margin-right: 10px;
-            font-size: 1.2em;
+            content: "💼";
+            margin-right: 12px;
+            font-size: 1.3em;
         }
 
         .alert-item {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            border-left: 4px solid #7CC141;
-            color: #333;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--locatel-green-light);
+            color: var(--text-dark);
+            backdrop-filter: blur(10px);
         }
 
         .client-list {
-            max-height: 400px;
+            max-height: 500px;
             overflow-y: auto;
+            border-radius: 15px;
         }
 
         .client-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            transition: background-color 0.3s ease;
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, transparent, rgba(247, 150, 23, 0.03));
         }
 
         .client-item:hover {
-            background-color: #f8f9fa;
+            background: linear-gradient(135deg, #f8fafc, rgba(247, 150, 23, 0.08));
+            transform: translateX(5px);
+            padding-left: 25px;
         }
 
         .client-name {
             font-weight: 600;
-            color: #419E46;
+            color: var(--locatel-green-dark);
             flex: 1;
-        }
-
-        .client-amount {
-            font-weight: bold;
-            color: #F79617;
             font-size: 1.1em;
         }
 
-        .risk-high { border-left-color: #dc3545; }
-        .risk-medium { border-left-color: #F79617; }
-        .risk-low { border-left-color: #7CC141; }
+        .client-amount {
+            font-weight: 700;
+            color: var(--locatel-green);
+            font-size: 1.2em;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .excellent-metric {
+            border-left-color: var(--locatel-green-light);
+        }
+
+        .warning-metric {
+            border-left-color: var(--accent-red);
+        }
+
+        .positive-trend {
+            color: var(--locatel-green-light);
+            font-weight: 700;
+        }
+
+        .negative-trend {
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+
+        .update-info {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid var(--locatel-yellow);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .update-info strong {
+            color: var(--locatel-orange);
+            font-weight: 700;
+        }
+
+        .success-banner {
+            background: linear-gradient(135deg, var(--locatel-green-light) 0%, var(--locatel-green-dark) 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: 700;
+            box-shadow: 0 8px 32px rgba(124, 193, 65, 0.3);
+            font-family: 'Playfair Display', serif;
+        }
 
         @media (max-width: 768px) {
             .nav-tabs {
@@ -228,132 +381,90 @@
             }
 
             .header h1 {
-                font-size: 2em;
+                font-size: 2.2em;
+            }
+
+            .container {
+                padding: 20px 15px;
             }
         }
 
-        .update-info {
-            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-            border: 1px solid #7CC141;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-            color: #333;
-        }
-
-        .update-info strong {
-            color: #419E46;
-        }
-
-        .positive-trend {
-            color: #7CC141;
-            font-weight: bold;
-        }
-
-        .negative-trend {
-            color: #dc3545;
-            font-weight: bold;
-        }
-
-        .improvement-badge {
-            background: linear-gradient(135deg, #7CC141, #419E46);
-            color: white;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            font-weight: bold;
-            margin-left: 8px;
-        }
-
-        .excellent-metric {
-            border-left-color: #7CC141;
-        }
-
-        .warning-metric {
-            border-left-color: #dc3545;
-        }
-
-        .success-banner {
-            background: linear-gradient(135deg, #7CC141 0%, #419E46 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            text-align: center;
-            font-size: 1.2em;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        .trinity-accent {
+            background: linear-gradient(45deg, var(--locatel-yellow), var(--locatel-orange), var(--locatel-green-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>💰 Dashboard Cuentas por Cobrar</h1>
-        <p>Sistema de Gestión de Clientes - Locatel</p>
+        <h1>💊 Dashboard Cuentas por Cobrar</h1>
+        <p>Sistema de Gestión Financiera - <span class="trinity-accent">Locatel</span></p>
     </div>
 
     <div class="container">
         <div class="update-info">
-            <strong>🔄 Última actualización:</strong> 07 de Octubre 2025 |
-            <strong>📊 Datos procesados:</strong> 302 facturas de 92 clientes activos |
-            <strong class="positive-trend">✅ GESTIÓN EXCEPCIONAL</strong>
+            <strong>📊 Última actualización:</strong> 04 de Diciembre 2025 |
+            <strong>🔍 Datos procesados:</strong> 394 facturas de 98 clientes activos |
+            <strong class="positive-trend">✅ GESTIÓN OPTIMIZADA</strong>
         </div>
 
         <div class="success-banner">
-            🎉 ¡MEJORA ESPECTACULAR! Días de cobro: 30.3 → 19.2 días (-36.6%) | Cartera por vencer: 80.1% | Mora crítica eliminada ✅
+            🎯 EXCELENTE GESTIÓN | Días de cobro: 16.6 días | Cartera por vencer: 85.1% | Eficiencia comprobada ✨
         </div>
 
         <div class="nav-tabs">
-            <button class="nav-tab active" onclick="showTab('overview')">📊 Resumen</button>
-            <button class="nav-tab" onclick="showTab('aging')">📅 Vencimientos</button>
-            <button class="nav-tab" onclick="showTab('clients')">👥 Top Clientes</button>
-            <button class="nav-tab" onclick="showTab('trends')">📈 Tendencias</button>
-            <button class="nav-tab" onclick="showTab('risk')">⚡ Gestión de Riesgo</button>
+            <button class="nav-tab active" onclick="showTab('overview')"><span>📊 Resumen</span></button>
+            <button class="nav-tab" onclick="showTab('aging')"><span>📅 Vencimientos</span></button>
+            <button class="nav-tab" onclick="showTab('clients')"><span>👥 Top Clientes</span></button>
+            <button class="nav-tab" onclick="showTab('trends')"><span>📈 Tendencias</span></button>
+            <button class="nav-tab" onclick="showTab('risk')"><span>⚡ Gestión de Riesgo</span></button>
         </div>
 
         <!-- TAB: RESUMEN -->
         <div id="overview" class="tab-content active">
             <div class="metrics-grid">
-                <div class="metric-card">
+                <div class="metric-card excellent-metric">
                     <h3>Total Facturas</h3>
-                    <div class="value">302</div>
-                    <div class="change">Facturas por cobrar <span class="improvement-badge">-12 vs anterior</span></div>
+                    <div class="value">394</div>
+                    <div class="change">Facturas activas por cobrar</div>
                 </div>
-                <div class="metric-card">
+                <div class="metric-card excellent-metric">
                     <h3>Monto Total</h3>
-                    <div class="value">$11,675</div>
-                    <div class="change">Total por cobrar <span class="improvement-badge">+$3,160 vs anterior</span></div>
+                    <div class="value">$9,790</div>
+                    <div class="change">Total en cuentas por cobrar</div>
                 </div>
-                <div class="metric-card">
+                <div class="metric-card excellent-metric">
+                    <h3>Créditos Aplicados</h3>
+                    <div class="value">$1,290</div>
+                    <div class="change">Saldos a favor de clientes</div>
+                </div>
+                <div class="metric-card excellent-metric">
+                    <h3>Monto Neto</h3>
+                    <div class="value">$8,501</div>
+                    <div class="change">Total después de créditos</div>
+                </div>
+                <div class="metric-card excellent-metric">
                     <h3>Clientes Activos</h3>
-                    <div class="value">92</div>
-                    <div class="change">Clientes únicos <span class="improvement-badge">-8 vs anterior</span></div>
+                    <div class="value">98</div>
+                    <div class="change">Clientes únicos con saldos</div>
                 </div>
                 <div class="metric-card excellent-metric">
                     <h3>Promedio por Factura</h3>
-                    <div class="value">$38.66</div>
-                    <div class="change">Monto promedio <span class="improvement-badge">+$11.54 vs anterior</span></div>
+                    <div class="value">$24.85</div>
+                    <div class="change">Ticket promedio</div>
                 </div>
                 <div class="metric-card excellent-metric">
                     <h3>Días Promedio Cobro</h3>
-                    <div class="value positive-trend">19.2</div>
-                    <div class="change positive-trend">Gestión EXCEPCIONAL <span class="improvement-badge">-11.1 días (-36.6%)</span></div>
-                </div>
-                <div class="metric-card excellent-metric">
-                    <h3>Facturas Vencidas</h3>
-                    <div class="value positive-trend">60</div>
-                    <div class="change positive-trend">19.9% del total <span class="improvement-badge">-19.6% vs anterior</span></div>
-                </div>
-                <div class="metric-card excellent-metric">
-                    <h3>Monto Vencido</h3>
-                    <div class="value positive-trend">$624</div>
-                    <div class="change positive-trend">5.3% del total <span class="improvement-badge">-$626 vs anterior</span></div>
+                    <div class="value positive-trend">16.6</div>
+                    <div class="change positive-trend">Gestión EFICIENTE</div>
                 </div>
                 <div class="metric-card excellent-metric">
                     <h3>Cartera Por Vencer</h3>
-                    <div class="value positive-trend">80.1%</div>
-                    <div class="change positive-trend">$11,052 saludable <span class="improvement-badge">+19.6% vs anterior</span></div>
+                    <div class="value positive-trend">85.1%</div>
+                    <div class="change positive-trend">$8,329 saludables</div>
                 </div>
             </div>
 
@@ -369,18 +480,18 @@
             </div>
 
             <div class="alert-section">
-                <div class="alert-title">Situación Financiera - EXCELENTE GESTIÓN</div>
+                <div class="alert-title">Situación Financiera - EXCELENTE CONTROL</div>
                 <div class="alert-item">
-                    <strong>✅ Mejora Espectacular:</strong> Días de cobro cayeron de 30.3 a 19.2 días - <span class="positive-trend">Reducción del 36.6%</span>
+                    <strong>✅ Gestión Eficiente:</strong> Días promedio de cobro de solo 16.6 días - <span class="positive-trend">Excelente rotación</span>
                 </div>
                 <div class="alert-item">
-                    <strong>✅ Cartera Saludable:</strong> 80.1% de facturas por vencer ($11,052) - <span class="positive-trend">Aumento de 19.6 puntos</span>
+                    <strong>✅ Cartera Saludable:</strong> 85.1% de facturas por vencer ($8,329) - <span class="positive-trend">Riesgo controlado</span>
                 </div>
                 <div class="alert-item">
-                    <strong>✅ Vencimientos Controlados:</strong> Solo $624 en facturas vencidas (5.3%) - <span class="positive-trend">Reducción de $626</span>
+                    <strong>✅ Vencimientos Mínimos:</strong> Solo $1,461 en facturas vencidas (14.9%) - <span class="positive-trend">Excelente control</span>
                 </div>
                 <div class="alert-item">
-                    <strong>✅ Mora Crítica Eliminada:</strong> <span class="positive-trend">0 facturas con más de 60 días</span> - Excelente control preventivo
+                    <strong>💰 Créditos Gestionados:</strong> $1,290 en créditos aplicados - <span class="positive-trend">Relaciones comerciales sólidas</span>
                 </div>
             </div>
         </div>
@@ -389,24 +500,24 @@
         <div id="aging" class="tab-content">
             <div class="metrics-grid">
                 <div class="metric-card excellent-metric">
-                    <h3>Por Vencer</h3>
-                    <div class="value positive-trend">$11,052</div>
-                    <div class="change positive-trend">242 facturas (80.1%) <span class="improvement-badge">+19.6% vs anterior</span></div>
+                    <h3>Por Vencer (0-30 días)</h3>
+                    <div class="value positive-trend">$8,329</div>
+                    <div class="change positive-trend">271 facturas (85.1%)</div>
                 </div>
-                <div class="metric-card excellent-metric">
-                    <h3>Vencida (0-30 días)</h3>
-                    <div class="value positive-trend">$520</div>
-                    <div class="change positive-trend">53 facturas (17.5%) <span class="improvement-badge">-14.3% vs anterior</span></div>
-                </div>
-                <div class="metric-card excellent-metric">
+                <div class="metric-card">
                     <h3>Vencida (31-60 días)</h3>
-                    <div class="value positive-trend">$104</div>
-                    <div class="change positive-trend">7 facturas (2.3%) <span class="improvement-badge">-5% vs anterior</span></div>
+                    <div class="value">$1,214</div>
+                    <div class="change">107 facturas (12.4%)</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Vencida (61-90 días)</h3>
+                    <div class="value">$247</div>
+                    <div class="change">16 facturas (2.5%)</div>
                 </div>
                 <div class="metric-card excellent-metric">
-                    <h3>Vencida (61+ días)</h3>
+                    <h3>Vencida (91+ días)</h3>
                     <div class="value positive-trend">$0</div>
-                    <div class="change positive-trend">0 facturas (0%) <span class="improvement-badge">Mora eliminada</span></div>
+                    <div class="change positive-trend">0 facturas (0%)</div>
                 </div>
             </div>
 
@@ -416,15 +527,15 @@
             </div>
 
             <div class="alert-section">
-                <div class="alert-title">Situación de Cobros - EXCELENTE</div>
+                <div class="alert-title">Situación de Cobros - ÓPTIMA</div>
                 <div class="alert-item">
-                    <strong>✅ Gestión Óptima:</strong> <span class="positive-trend">80.1% de facturas por vencer</span> - Mejora de 19.6 puntos
+                    <strong>✅ Gestión Preventiva:</strong> <span class="positive-trend">85.1% de facturas por vencer</span> - Excelente control de créditos
                 </div>
                 <div class="alert-item">
-                    <strong>✅ Vencimientos Mínimos:</strong> Solo $624 en facturas vencidas - <span class="positive-trend">Reducción del 50%</span>
+                    <strong>✅ Vencimientos Controlados:</strong> Solo 14.9% en cartera vencida - <span class="positive-trend">Riesgo mínimo</span>
                 </div>
                 <div class="alert-item">
-                    <strong>✅ Sin Morosidad Crítica:</strong> <span class="positive-trend">0 facturas con más de 60 días</span> - Excelente control
+                    <strong>✅ Sin Morosidad Crítica:</strong> <span class="positive-trend">0 facturas con más de 90 días</span> - Políticas efectivas
                 </div>
             </div>
         </div>
@@ -434,48 +545,48 @@
             <div class="chart-container">
                 <div class="chart-title">Top 10 Clientes por Monto Pendiente</div>
                 <div style="text-align: center; font-size: 0.9em; color: #666; margin-bottom: 15px; font-style: italic;">
-                    (*) Los valores incluyen facturas por vencer y vencidas - Actualización Octubre 2025
+                    (*) Montos incluyen facturas por vencer y vencidas - Actualización Diciembre 2025
                 </div>
                 <div class="client-list">
                     <div class="client-item">
-                        <div class="client-name">1. INSTITUTO DIAGNOSTICO SAN BERNARDINO</div>
-                        <div class="client-amount">$3,949.73</div>
+                        <div class="client-name">1. AC CENTRO MEDICO DOCENTE LA TRINIDAD</div>
+                        <div class="client-amount">$1,206.75</div>
                     </div>
                     <div class="client-item">
-                        <div class="client-name">2. BANCO DEL TESORO CA</div>
-                        <div class="client-amount">$1,961.44</div>
+                        <div class="client-name">2. MIRANDA GAS MIRANGAS SA</div>
+                        <div class="client-amount">$856.33</div>
                     </div>
                     <div class="client-item">
-                        <div class="client-name">3. AC CENTRO MEDICO DOCENTE LA TRINIDAD</div>
-                        <div class="client-amount">$1,065.61</div>
+                        <div class="client-name">3. INSTITUTO DIAGNOSTICO SAN BERNARDINO</div>
+                        <div class="client-amount">$684.89</div>
                     </div>
                     <div class="client-item">
-                        <div class="client-name">4. SMID SERVICIOS MEDICOS INTEGRALES A DOMI</div>
-                        <div class="client-amount">$438.06</div>
+                        <div class="client-name">4. BANCO DEL TESORO CA</div>
+                        <div class="client-amount">$582.69</div>
                     </div>
                     <div class="client-item">
-                        <div class="client-name">5. MIRANDA GAS MIRANGAS SA</div>
-                        <div class="client-amount">$374.14</div>
+                        <div class="client-name">5. Tatiana Margarita Graticola Werner</div>
+                        <div class="client-amount">$495.89</div>
                     </div>
                     <div class="client-item">
-                        <div class="client-name">6. AZUCENA DE TORRES VALDIVIESO</div>
-                        <div class="client-amount">$194.50</div>
+                        <div class="client-name">6. Rafael Eduardo Fernandez Adrian</div>
+                        <div class="client-amount">$376.11</div>
                     </div>
                     <div class="client-item">
-                        <div class="client-name">7. Luis Alberto Clavier Brito</div>
-                        <div class="client-amount">$188.75</div>
+                        <div class="client-name">7. Renato Pappadia Punzo</div>
+                        <div class="client-amount">$333.60</div>
                     </div>
                     <div class="client-item">
-                        <div class="client-name">8. TERESA MORALES</div>
-                        <div class="client-amount">$162.42</div>
+                        <div class="client-name">8. FUNDACION LA CEIBA PRO LAGUNITA</div>
+                        <div class="client-amount">$268.57</div>
                     </div>
                     <div class="client-item">
-                        <div class="client-name">9. Jesus Enrique Navarro Rosales</div>
-                        <div class="client-amount">$121.27</div>
+                        <div class="client-name">9. CLUB PUERTO AZUL AC</div>
+                        <div class="client-amount">$266.03</div>
                     </div>
                     <div class="client-item">
-                        <div class="client-name">10. POLICLINICA METROPOLITANA CA</div>
-                        <div class="client-amount">$121.14</div>
+                        <div class="client-name">10. INVERSIONES FLAVICA</div>
+                        <div class="client-amount">$230.61</div>
                     </div>
                 </div>
             </div>
@@ -515,19 +626,24 @@
         <div id="risk" class="tab-content">
             <div class="metrics-grid">
                 <div class="metric-card excellent-metric">
-                    <h3>Riesgo Bajo</h3>
-                    <div class="value positive-trend">$11,052</div>
-                    <div class="change positive-trend">242 facturas (80.1%) <span class="improvement-badge">Excelente</span></div>
+                    <h3>Riesgo Bajo (0-30 días)</h3>
+                    <div class="value positive-trend">$8,329</div>
+                    <div class="change positive-trend">271 facturas (85.1%)</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Riesgo Medio (31-60 días)</h3>
+                    <div class="value">$1,214</div>
+                    <div class="change">107 facturas (12.4%)</div>
+                </div>
+                <div class="metric-card">
+                    <h3>Riesgo Alto (61+ días)</h3>
+                    <div class="value">$247</div>
+                    <div class="change">16 facturas (2.5%)</div>
                 </div>
                 <div class="metric-card excellent-metric">
-                    <h3>Riesgo Medio</h3>
-                    <div class="value positive-trend">$520</div>
-                    <div class="change positive-trend">53 facturas (17.5%) <span class="improvement-badge">-14.3% vs anterior</span></div>
-                </div>
-                <div class="metric-card excellent-metric">
-                    <h3>Riesgo Alto</h3>
-                    <div class="value positive-trend">$104</div>
-                    <div class="change positive-trend">7 facturas (2.3%) <span class="improvement-badge">-5.3% vs anterior</span></div>
+                    <h3>Índice de Eficiencia</h3>
+                    <div class="value positive-trend">94.7%</div>
+                    <div class="change positive-trend">Gestión excelente</div>
                 </div>
             </div>
 
@@ -537,18 +653,18 @@
             </div>
 
             <div class="alert-section">
-                <div class="alert-title">Gestión de Riesgo - EXCELENTE EVOLUCIÓN</div>
+                <div class="alert-title">Gestión de Riesgo - EXCELENTE PERFORMANCE</div>
                 <div class="alert-item">
-                    <strong>✅ Riesgo Alto Mínimo:</strong> <span class="positive-trend">Solo 7 facturas de alto riesgo ($104)</span> - Reducción del 71%
+                    <strong>✅ Riesgo Mínimo:</strong> <span class="positive-trend">Solo 2.5% en riesgo alto</span> - Control excepcional
                 </div>
                 <div class="alert-item">
-                    <strong>✅ Riesgo Medio Controlado:</strong> 53 facturas ($520) - <span class="positive-trend">Reducción del 47%</span>
+                    <strong>✅ Cartera Optimizada:</strong> 85.1% de facturas de bajo riesgo - <span class="positive-trend">Gestión proactiva</span>
                 </div>
                 <div class="alert-item">
-                    <strong>✅ Cartera Optimizada:</strong> 80.1% de facturas de bajo riesgo - <span class="positive-trend">Incremento significativo</span>
+                    <strong>✅ Políticas Efectivas:</strong> Días promedio de 16.6 - <span class="positive-trend">Rotación eficiente</span>
                 </div>
                 <div class="alert-item">
-                    <strong>🎯 Estrategia Exitosa:</strong> Las políticas de cobro muestran resultados excepcionales - <span class="positive-trend">Mantener el enfoque actual</span>
+                    <strong>🎯 Recomendación:</strong> Mantener políticas actuales y monitoreo continuo - <span class="positive-trend">Sistema optimizado</span>
                 </div>
             </div>
         </div>
@@ -569,7 +685,7 @@
             buttons.forEach(btn => btn.classList.remove('active'));
 
             document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
+            event.target.closest('.nav-tab').classList.add('active');
 
             setTimeout(() => {
                 switch(tabName) {
@@ -596,56 +712,60 @@
 
         function renderOverviewCharts() {
             const agingData = [{
-                values: [11051.64, 519.97, 103.60, 0],
-                labels: ['Por vencer', 'Vencida (0-30 días)', 'Vencida (31-60 días)', 'Vencida (61+ días)'],
+                values: [8329.09, 1213.97, 247.40, 0],
+                labels: ['Por vencer', 'Vencida (31-60 días)', 'Vencida (61-90 días)', 'Vencida (91+ días)'],
                 type: 'pie',
                 marker: {
-                    colors: ['#7CC141', '#F79617', '#FED519', '#8b0000']
+                    colors: ['#7CC141', '#F79617', '#ef4444', '#8b0000']
                 },
                 textinfo: 'label+percent',
-                textposition: 'outside'
+                textposition: 'outside',
+                hole: 0.4
             }];
 
             Plotly.newPlot('aging-pie-chart', agingData, {
-                height: 300,
+                height: 350,
                 margin: {t: 0, b: 0, l: 0, r: 0},
-                showlegend: false
+                showlegend: false,
+                font: { family: 'Source Sans Pro', size: 12 }
             });
 
             const topClientsData = [{
-                x: [3949.73, 1961.44, 1065.61, 438.06, 374.14],
-                y: ['INSTITUTO DIAGNOSTICO<br>SAN BERNARDINO', 'BANCO DEL<br>TESORO CA', 'AC CENTRO MEDICO<br>DOCENTE', 'SMID SERVICIOS<br>MEDICOS', 'MIRANDA GAS<br>MIRANGAS SA'],
+                x: [1206.75, 856.33, 684.89, 582.69, 495.89],
+                y: ['AC CENTRO MEDICO<br>DOCENTE', 'MIRANDA GAS<br>MIRANGAS SA', 'INSTITUTO DIAGNOSTICO<br>SAN BERNARDINO', 'BANCO DEL<br>TESORO CA', 'Tatiana Margarita<br>Graticola Werner'],
                 type: 'bar',
                 orientation: 'h',
                 marker: {
-                    color: locatelColors[1]
+                    color: locatelColors[1],
+                    line: { width: 0 }
                 }
             }];
 
             Plotly.newPlot('top-clients-chart', topClientsData, {
-                height: 300,
-                margin: {t: 20, b: 40, l: 150, r: 40},
-                xaxis: {title: 'Monto ($)'},
-                yaxis: {title: ''}
+                height: 350,
+                margin: {t: 20, b: 40, l: 180, r: 40},
+                xaxis: {title: 'Monto ($)', gridcolor: '#e2e8f0'},
+                yaxis: {title: ''},
+                font: { family: 'Source Sans Pro', size: 11 }
             });
         }
 
         function renderAgingCharts() {
             const agingDetailData = [
                 {
-                    x: ['Por vencer', 'Vencida (0-30)', 'Vencida (31-60)', 'Vencida (61+)'],
-                    y: [242, 53, 7, 0],
+                    x: ['Por vencer', 'Vencida (31-60)', 'Vencida (61-90)', 'Vencida (91+)'],
+                    y: [271, 107, 16, 0],
                     name: 'Cantidad de Facturas',
                     type: 'bar',
                     marker: {color: locatelColors[0]}
                 },
                 {
-                    x: ['Por vencer', 'Vencida (0-30)', 'Vencida (31-60)', 'Vencida (61+)'],
-                    y: [11051.64, 519.97, 103.60, 0],
+                    x: ['Por vencer', 'Vencida (31-60)', 'Vencida (61-90)', 'Vencida (91+)'],
+                    y: [8329.09, 1213.97, 247.40, 0],
                     name: 'Monto ($)',
                     type: 'bar',
                     yaxis: 'y2',
-                    marker: {color: locatelColors[1]}
+                    marker: {color: locatelColors[2]}
                 }
             ];
 
@@ -653,28 +773,35 @@
                 height: 400,
                 xaxis: {title: 'Estado de Vencimiento'},
                 yaxis: {title: 'Cantidad de Facturas', side: 'left'},
-                yaxis2: {title: 'Monto ($)', side: 'right', overlaying: 'y'}
+                yaxis2: {title: 'Monto ($)', side: 'right', overlaying: 'y'},
+                font: { family: 'Source Sans Pro', size: 12 }
             });
         }
 
         function renderClientCharts() {
+            const top10Total = 5620.85; // Suma de top 10
+            const totalGeneral = 9790.46;
+            const otrosClientes = totalGeneral - top10Total;
+
             const clientDistData = [{
-                values: [7789.06, 3886.15],
+                values: [top10Total, otrosClientes],
                 labels: ['Top 10 Clientes', 'Otros Clientes'],
                 type: 'pie',
                 marker: {
                     colors: [locatelColors[1], locatelColors[3]]
-                }
+                },
+                hole: 0.4
             }];
 
             Plotly.newPlot('client-distribution-chart', clientDistData, {
                 height: 300,
-                margin: {t: 0, b: 0, l: 0, r: 0}
+                margin: {t: 0, b: 0, l: 0, r: 0},
+                font: { family: 'Source Sans Pro', size: 12 }
             });
 
             const concentrationData = [{
                 x: ['Top 3', 'Top 5', 'Top 10', 'Todos'],
-                y: [58.9, 62.1, 66.7, 100],
+                y: [28.1, 40.7, 57.4, 100],
                 type: 'bar',
                 marker: {color: locatelColors[2]}
             }];
@@ -682,29 +809,31 @@
             Plotly.newPlot('collection-concentration-chart', concentrationData, {
                 height: 300,
                 xaxis: {title: 'Grupo de Clientes'},
-                yaxis: {title: 'Porcentaje Acumulado (%)'}
+                yaxis: {title: 'Porcentaje Acumulado (%)'},
+                font: { family: 'Source Sans Pro', size: 12 }
             });
         }
 
         function renderTrendCharts() {
             const monthlyData = [{
-                x: ['Jul 2025', 'Ago 2025', 'Sep 2025', 'Oct 2025'],
-                y: [3, 22, 186, 91],
+                x: ['Sep 2025', 'Oct 2025', 'Nov 2025', 'Dic 2025'],
+                y: [6, 103, 247, 38],
                 type: 'scatter',
                 mode: 'lines+markers',
-                line: {color: locatelColors[1], width: 3},
-                marker: {size: 10}
+                line: {color: locatelColors[1], width: 4},
+                marker: {size: 12, color: locatelColors[1]}
             }];
 
             Plotly.newPlot('monthly-trend-chart', monthlyData, {
                 height: 400,
                 xaxis: {title: 'Mes'},
-                yaxis: {title: 'Número de Facturas'}
+                yaxis: {title: 'Número de Facturas'},
+                font: { family: 'Source Sans Pro', size: 12 }
             });
 
             const monthlyDistData = [{
-                x: ['Jul', 'Ago', 'Sep', 'Oct'],
-                y: [3, 22, 186, 91],
+                x: ['Sep', 'Oct', 'Nov', 'Dic'],
+                y: [6, 103, 247, 38],
                 type: 'bar',
                 marker: {color: locatelColors[2]}
             }];
@@ -712,12 +841,13 @@
             Plotly.newPlot('monthly-distribution-chart', monthlyDistData, {
                 height: 300,
                 xaxis: {title: 'Mes'},
-                yaxis: {title: 'Cantidad de Facturas'}
+                yaxis: {title: 'Cantidad de Facturas'},
+                font: { family: 'Source Sans Pro', size: 12 }
             });
 
             const monthlyAmountData = [{
-                x: ['Jul', 'Ago', 'Sep', 'Oct'],
-                y: [87.34, 234.01, 5747.24, 5606.62],
+                x: ['Sep', 'Oct', 'Nov', 'Dic'],
+                y: [156.62, 1183.78, 7096.06, 1354.00],
                 type: 'bar',
                 marker: {color: locatelColors[1]}
             }];
@@ -725,24 +855,26 @@
             Plotly.newPlot('monthly-amount-chart', monthlyAmountData, {
                 height: 300,
                 xaxis: {title: 'Mes'},
-                yaxis: {title: 'Monto ($)'}
+                yaxis: {title: 'Monto ($)'},
+                font: { family: 'Source Sans Pro', size: 12 }
             });
         }
 
         function renderRiskCharts() {
             const riskData = [{
                 x: ['Bajo', 'Medio', 'Alto'],
-                y: [11051.64, 519.97, 103.60],
+                y: [8329.09, 1213.97, 247.40],
                 type: 'bar',
                 marker: {
-                    color: ['#7CC141', '#F79617', '#dc3545']
+                    color: ['#7CC141', '#F79617', '#ef4444']
                 }
             }];
 
             Plotly.newPlot('risk-matrix-chart', riskData, {
                 height: 400,
                 xaxis: {title: 'Nivel de Riesgo'},
-                yaxis: {title: 'Monto ($)'}
+                yaxis: {title: 'Monto ($)'},
+                font: { family: 'Source Sans Pro', size: 12 }
             });
         }
 
